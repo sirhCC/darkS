@@ -1,0 +1,22 @@
+{
+  "name": "darks-rpg-dungeon-crawler",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "start:frontend": "npm --prefix frontend start",
+    "start:backend": "npm --prefix backend start",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
