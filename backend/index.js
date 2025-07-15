@@ -5,6 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const dungeonRoutes = require('./routes/dungeonRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const { initDB } = require('./services/db');
+const errorHandler = require('./middleware/errorHandler');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -20,6 +21,9 @@ initDB().then(() => {
   app.get('/', (req, res) => {
     res.send('🗝️ Welcome to the Dungeon Crawler Backend!');
   });
+
+  // Error handling middleware (should be last)
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Backend server running on http://localhost:${PORT}`);
