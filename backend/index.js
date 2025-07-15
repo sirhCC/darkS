@@ -4,6 +4,10 @@ const playerRoutes = require('./routes/playerRoutes');
 const authRoutes = require('./routes/authRoutes');
 const dungeonRoutes = require('./routes/dungeonRoutes');
 const itemRoutes = require('./routes/itemRoutes');
+const inventoryRoutes = require('./routes/inventoryRoutes');
+const playerFeatureRoutes = require('./routes/playerFeatureRoutes');
+const combatRoutes = require('./routes/combatRoutes');
+const dungeonProgressRoutes = require('./routes/dungeonProgressRoutes');
 const { initDB } = require('./services/db');
 const errorHandler = require('./middleware/errorHandler');
 const app = express();
@@ -17,12 +21,15 @@ initDB().then(() => {
   app.use('/api/auth', authRoutes);
   app.use('/api/dungeon', dungeonRoutes);
   app.use('/api/item', itemRoutes);
+  app.use('/api/inventory', inventoryRoutes);
+  app.use('/api/player-feature', playerFeatureRoutes);
+  app.use('/api/combat', combatRoutes);
+  app.use('/api/dungeon-progress', dungeonProgressRoutes);
 
   app.get('/', (req, res) => {
     res.send('🗝️ Welcome to the Dungeon Crawler Backend!');
   });
 
-  // Error handling middleware (should be last)
   app.use(errorHandler);
 
   app.listen(PORT, () => {
