@@ -3,6 +3,7 @@ import SettingsMenu from './components/SettingsMenu';
 import { GameProvider } from './context/GameContext';
 import { useAudioVisualEffects } from './hooks/useAudioVisualEffects';
 import MainGameScreen from './components/game/MainGameScreen';
+import PlayerSelectScreen from './components/game/PlayerSelectScreen';
 
 const menuBg = {
   minHeight: '100vh',
@@ -138,27 +139,13 @@ function App() {
       />
     );
   if (menu === 'player-select') {
-    const [input, setInput] = useState('');
     return (
-      <div style={menuBg}>
-        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Choose Your Adventurer</h2>
-        <input
-          style={{ fontSize: '1.2rem', padding: '0.5rem', borderRadius: 8, border: 'none', marginBottom: 16 }}
-          placeholder="Enter username..."
-          value={input}
-          onChange={e => setInput(e.target.value)}
-        />
-        <button
-          style={buttonStyle}
-          onClick={() => handleStartGame(input)}
-          disabled={!input.trim()}
-        >
-          Start Game
-        </button>
-        <button style={{ ...buttonStyle, marginTop: 8 }} onClick={() => setMenu('main')}>
-          Back
-        </button>
-      </div>
+      <PlayerSelectScreen
+        onStart={handleStartGame}
+        onBack={() => setMenu('main')}
+        menuBg={menuBg}
+        buttonStyle={buttonStyle}
+      />
     );
   }
   if (menu === 'play' && playerSelected && username)
