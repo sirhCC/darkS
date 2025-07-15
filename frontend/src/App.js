@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import SettingsMenu from './components/SettingsMenu';
+import { GameProvider } from './context/GameContext';
 
 const menuBg = {
   minHeight: '100vh',
@@ -95,18 +97,6 @@ function MainMenu({ onNavigate }) {
   );
 }
 
-function SettingsMenu({ onBack }) {
-  return (
-    <div style={menuBg}>
-      <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>⚙️ Settings</h2>
-      <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-        (Settings UI coming soon!)
-      </p>
-      <button style={buttonStyle} onClick={onBack}>⬅️ Back</button>
-    </div>
-  );
-}
-
 function QuitScreen() {
   return (
     <div style={menuBg}>
@@ -133,4 +123,10 @@ function App() {
   return null;
 }
 
-export default App;
+export default function AppWithProvider() {
+  return (
+    <GameProvider>
+      <App />
+    </GameProvider>
+  );
+}
