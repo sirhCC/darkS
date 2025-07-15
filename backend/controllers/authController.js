@@ -20,3 +20,7 @@ exports.login = async (req, res) => {
     res.status(400).json({ error: e.message });
   }
 };
+
+exports.me = (req, res) => {
+  res.json({ username: req.user.username });
+};
