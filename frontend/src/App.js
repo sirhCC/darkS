@@ -134,5 +134,3 @@ function App() {
 }
 
 export default App;
-
-// Move App.js and index.js to src/ and remove from root
