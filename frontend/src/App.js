@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SettingsMenu from './components/SettingsMenu';
 import { GameProvider } from './context/GameContext';
+import { useAudioVisualEffects } from './hooks/useAudioVisualEffects';
 
 const menuBg = {
   minHeight: '100vh',
@@ -109,6 +110,7 @@ function QuitScreen() {
 }
 
 function App() {
+  useAudioVisualEffects();
   const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState('main');
 
