@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SettingsMenu from './components/SettingsMenu';
 import { GameProvider } from './context/GameContext';
 import { useAudioVisualEffects } from './hooks/useAudioVisualEffects';
+import MainGameScreen from './components/game/MainGameScreen';
 
 const menuBg = {
   minHeight: '100vh',
@@ -113,13 +114,55 @@ function App() {
   useAudioVisualEffects();
   const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState('main');
+  const [username, setUsername] = useState('');
+  const [playerSelected, setPlayerSelected] = useState(false);
+
+  const handleStartGame = (name) => {
+    setUsername(name);
+    setPlayerSelected(true);
+    setMenu('play');
+  };
 
   useEffect(() => {
     if (!loading) setMenu('main');
   }, [loading]);
 
   if (loading) return <LoadingScreen onFinish={() => setLoading(false)} />;
-  if (menu === 'main') return <MainMenu onNavigate={setMenu} />;
+  if (menu === 'main')
+    return (
+      <MainMenu
+        onNavigate={(nav) => {
+          if (nav === 'play') setMenu('player-select');
+          else setMenu(nav);
+        }}
+      />
+    );
+  if (menu === 'player-select') {
+    const [input, setInput] = useState('');
+    return (
+      <div style={menuBg}>
+        <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Choose Your Adventurer</h2>
+        <input
+          style={{ fontSize: '1.2rem', padding: '0.5rem', borderRadius: 8, border: 'none', marginBottom: 16 }}
+          placeholder="Enter username..."
+          value={input}
+          onChange={e => setInput(e.target.value)}
+        />
+        <button
+          style={buttonStyle}
+          onClick={() => handleStartGame(input)}
+          disabled={!input.trim()}
+        >
+          Start Game
+        </button>
+        <button style={{ ...buttonStyle, marginTop: 8 }} onClick={() => setMenu('main')}>
+          Back
+        </button>
+      </div>
+    );
+  }
+  if (menu === 'play' && playerSelected && username)
+    return <MainGameScreen username={username} onBackToMenu={() => setMenu('main')} />;
   if (menu === 'settings') return <SettingsMenu onBack={() => setMenu('main')} />;
   if (menu === 'quit') return <QuitScreen />;
   return null;
